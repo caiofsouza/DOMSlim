@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>DOMSlim</title>
+  <link rel="stylesheet" href="">
+  <script src="DOMSlim.js" type="text/javascript"></script>
+
+
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="content" style="display:none"></div>
+  <script>
+    const benchmark = () => {
+      const loop = 100000
+
+      let init_vanilla = performance.now()
+      for (let i = 0; i < loop; i ++) {
+        let title = document.createElement('h1')
+        let text = document.createTextNode('Im a title !')
+        title.append(text)
+        document.getElementById('content').appendChild(title)
+      }
+      let end_vanilla = performance.now()
+
+      console.log('Vanilla: ' + ((end_vanilla - init_vanilla) / 1000).toFixed(5) + 's')
+      let init_domslim = performance.now()
+      for (let i = 0; i < loop; i ++) {
+        DOMSlim.createEl('h1', {
+          text: 'Im a title !'
+        }).into('#content')
+      }
+      let end_domslim = performance.now()
+
+      console.log('DOMSlim: ' + ((end_domslim - init_domslim) / 1000).toFixed(5) + 's')
+
+      let init_jquery = performance.now()
+      for (let i = 0; i < loop; i ++) {
+        $("#content").append('<h1>Im a title !</h1>')
+      }
+      let end_jquery = performance.now()
+
+      console.log('jQuery: ' + ((end_jquery - init_jquery) / 1000).toFixed(5) + 's')
+    }
+  </script>
+
+  <button onclick="benchmark()"> Start</button>
+  
+</body>
+</html>
