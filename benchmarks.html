@@ -17,7 +17,7 @@
   <div id="content" style="display:none"></div>
   <script>
     const benchmark = () => {
-      const loop = 100000
+      const loop = 10000
 
       let init_vanilla = performance.now()
       for (let i = 0; i < loop; i ++) {
@@ -27,8 +27,8 @@
         document.getElementById('content').appendChild(title)
       }
       let end_vanilla = performance.now()
-
       console.log('Vanilla: ' + ((end_vanilla - init_vanilla) / 1000).toFixed(5) + 's')
+
       let init_domslim = performance.now()
       for (let i = 0; i < loop; i ++) {
         DOMSlim.createEl('h1', {
@@ -36,7 +36,6 @@
         }).into('#content')
       }
       let end_domslim = performance.now()
-
       console.log('DOMSlim: ' + ((end_domslim - init_domslim) / 1000).toFixed(5) + 's')
 
       let init_jquery = performance.now()
@@ -44,12 +43,50 @@
         $("#content").append('<h1>Im a title !</h1>')
       }
       let end_jquery = performance.now()
-
       console.log('jQuery: ' + ((end_jquery - init_jquery) / 1000).toFixed(5) + 's')
+    }
+
+    const stringToHtml = () => {
+      // const loop = 1000
+
+      // let init_domslim = performance.now()
+      // for (let i = 0; i < loop; i ++) {
+      //   document.getElementById('content').innerHTML += DOMSlim.stringToHtml('<ul><li>Lista 1</li><li>Lista 2</li><li>Lista 3</li><li>Lista 4</li></ul>')
+      // }
+      // let end_domslim = performance.now()
+      // console.log('DOMSlim: ' + ((end_domslim - init_domslim) / 1000).toFixed(5) + 's')
+
+      // let init_jquery = performance.now()
+      // for (let i = 0; i < loop; i ++) {
+      //   $("#content").html($("#content").html() + '<ul><li>Lista 1</li><li>Lista 2</li><li>Lista 3</li><li>Lista 4</li></ul>')
+      // }
+      // let end_jquery = performance.now()
+      // console.log('jQuery: ' + ((end_jquery - init_jquery) / 1000).toFixed(5) + 's')
+      
+      let text = `
+        <div>
+          <ul>
+            <li>Lista</li>
+            <li>Lista</li>
+            <li>Lista</li>
+          </ul>
+          <div>
+          
+          </div>
+          <p>
+            <span>
+            <strong>Eae</strong>
+           </span>
+          </p>
+        </div>
+      `
+      let el = DOMSlim.stringToHtml(text)
+      console.log(el)
+
     }
   </script>
 
-  <button onclick="benchmark()"> Start</button>
+  <button onclick="stringToHtml()"> Start</button>
   
 </body>
 </html>
