@@ -81,8 +81,8 @@
 
         if (regexTag.test(restOfText)) {
           parentNode = newElement
-          let matches = restOfText.match(/(\<)(\w+)/g)
-          let matchesFormatted = matches.map(m => m.replace(/\</, ''))
+          let matches = restOfText.match(/(\<)(\w+|\s)(\>)(\s+)/g)
+          let matchesFormatted = matches.map(m => m.replace(/[\<\>\/]/g, '').trim())
 
           console.log(matchesFormatted)
           // createElementTree(_elementTree, restOfText)
